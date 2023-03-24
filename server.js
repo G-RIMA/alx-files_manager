@@ -1,15 +1,18 @@
 const express = require('express');
-const { controllerRouting } = require('./routes/index');
-
-const port = process.env.PORT || 5000;
 const app = express();
 
+const db = require('./utils/db');
+const redis = require('./utils/redis');
+const routes = require('./routes/index');
+
 app.use(express.json());
+app.use('/api/v1', routes);
 
-controllerRouting(app);
+const PORT = process.env.PORT || 5000;
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
 
 module.exports = app;
+
